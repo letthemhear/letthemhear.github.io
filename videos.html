@@ -36,44 +36,60 @@
 
     <!--
       VIDEO CARD TEMPLATE
-      Self-hosted files get big fast. Short/small clips (under ~20–30MB) are fine to
-      keep in /videos and reference directly below. For anything longer, consider
-      uploading to YouTube (can be set to "unlisted") and swapping this <video> block
-      for an <iframe> embed — the surrounding card styling stays the same either way.
+      Each card embeds a YouTube video. To add yours: open the video on YouTube,
+      click Share > Embed, and copy just the video ID out of that code (the part
+      after "embed/" in the URL) — then replace REPLACE_WITH_VIDEO_ID below.
+      Videos set to "Unlisted" on YouTube still embed fine here even though they
+      won't show up in YouTube search.
     -->
     <div class="video-card">
-      <video controls preload="none" poster="images/video-placeholder-1.jpg">
-        <!-- Replace with your actual video filename in /videos -->
-        <source src="videos/video-01.mp4" type="video/mp4">
-        Your browser doesn't support embedded video.
-      </video>
+      <div class="video-embed">
+        <iframe
+          src="https://www.youtube.com/embed/REPLACE_WITH_VIDEO_ID_1"
+          title="Video Title 1"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
       <h3><!-- PLACEHOLDER TITLE --> Video Title 1</h3>
       <p><!-- PLACEHOLDER: short description or "LUX — from Lux Aeterna" --> Short description of this video.</p>
     </div>
 
     <div class="video-card">
-      <video controls preload="none" poster="images/video-placeholder-2.jpg">
-        <source src="videos/video-02.mp4" type="video/mp4">
-        Your browser doesn't support embedded video.
-      </video>
+      <div class="video-embed">
+        <iframe
+          src="https://www.youtube.com/embed/REPLACE_WITH_VIDEO_ID_2"
+          title="Video Title 2"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
       <h3>Video Title 2</h3>
       <p>Short description of this video.</p>
     </div>
 
     <div class="video-card">
-      <video controls preload="none" poster="images/video-placeholder-3.jpg">
-        <source src="videos/video-03.mp4" type="video/mp4">
-        Your browser doesn't support embedded video.
-      </video>
+      <div class="video-embed">
+        <iframe
+          src="https://www.youtube.com/embed/REPLACE_WITH_VIDEO_ID_3"
+          title="Video Title 3"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
       <h3>Video Title 3</h3>
       <p>Short description of this video.</p>
     </div>
 
     <div class="video-card">
-      <video controls preload="none" poster="images/video-placeholder-4.jpg">
-        <source src="videos/video-04.mp4" type="video/mp4">
-        Your browser doesn't support embedded video.
-      </video>
+      <div class="video-embed">
+        <iframe
+          src="https://www.youtube.com/embed/REPLACE_WITH_VIDEO_ID_4"
+          title="Video Title 4"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
       <h3>Video Title 4</h3>
       <p>Short description of this video.</p>
     </div>

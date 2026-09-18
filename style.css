@@ -2,7 +2,7 @@
    Jonah Cullen / LUX — site stylesheet
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap');
 
 /* ----- Reset ----- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -28,7 +28,7 @@ html { scroll-behavior: smooth; }
   --accent: #7c9470;
   --accent-soft: rgba(124, 148, 112, 0.16);
   --line: rgba(236, 233, 225, 0.14);
-  --serif: 'Fraunces', Georgia, serif;
+  --serif: 'Spectral', Georgia, serif;
   --sans: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --maxw: 1180px;
   --focus: #d8dfce;
@@ -475,6 +475,26 @@ body.theme-within .album-cover { box-shadow: 0 30px 60px -25px rgba(0,0,0,0.18);
   .player-time { display: none; }
 }
 
+/* ----- Album credits ----- */
+.credits-list {
+  border-top: 1px solid var(--line);
+  margin-top: 6px;
+}
+.credits-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+.credits-role {
+  color: var(--text-dim);
+  font-size: 0.92rem;
+}
+.credits-name {
+  font-size: 0.95rem;
+}
+
 /* ----- Notes / liner text on album pages ----- */
 .liner-notes { padding: 30px 0 100px; }
 .liner-notes .wrap { max-width: 640px; }
@@ -501,21 +521,18 @@ body.theme-within .album-cover { box-shadow: 0 30px 60px -25px rgba(0,0,0,0.18);
   grid-template-columns: 1fr 1fr;
   gap: 40px 30px;
 }
-.video-card video,
-.video-card .video-placeholder {
+.video-embed {
   width: 100%;
   aspect-ratio: 16 / 9;
   background: var(--bg-raised);
   border: 1px solid var(--line);
+  overflow: hidden;
 }
-.video-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-dim);
-  font-size: 0.9rem;
-  text-align: center;
-  padding: 20px;
+.video-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 .video-card h3 { margin-top: 16px; font-size: 1.1rem; font-weight: 500; }
 .video-card p { color: var(--text-dim); font-size: 0.92rem; margin-top: 4px; }
