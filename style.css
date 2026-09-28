@@ -60,6 +60,39 @@ body.theme-within {
   --focus: #3c3c37;
 }
 
+/* The Within hero sits on a photo with both light and dark areas, so its
+   title/tagline (and the nav, which floats over the same photo before
+   scrolling) can't safely use the theme's normal dark text color — it
+   would vanish against light parts of the image. Force a fixed light
+   color + shadow here instead, so it stays readable regardless of what's
+   behind it. */
+body.theme-within .hero-content .hero-name,
+body.theme-within .hero-content .hero-tagline,
+body.theme-within .hero-scroll-cue {
+  color: #f2f0e8;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+}
+
+body.theme-within .hero-scroll-cue::after {
+  background: #f2f0e8;
+}
+
+body.theme-within .site-header:not(.is-scrolled) .logo,
+body.theme-within .site-header:not(.is-scrolled) .site-nav a {
+  color: #f2f0e8;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+body.theme-within .site-header:not(.is-scrolled) .site-nav a.is-active::after {
+  background: #f2f0e8;
+}
+
+body.theme-within .site-header:not(.is-scrolled) .nav-toggle span,
+body.theme-within .site-header:not(.is-scrolled) .nav-toggle span::before,
+body.theme-within .site-header:not(.is-scrolled) .nav-toggle span::after {
+  background: #f2f0e8;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
@@ -186,17 +219,19 @@ body.theme-within .site-header.is-scrolled { background: rgba(228, 226, 221, 0.8
 /* ----- Hero ----- */
 .hero {
   position: relative;
-  /* On most screens this is simply 100vh. But on very wide/short screens,
-     forcing the box to exactly 100vh can make it wider (relative to its
-     height) than the hero photo itself — which forces object-fit:cover to
-     crop the top/bottom to fill that shape. This grows the box taller than
-     100vh on those screens instead, so the full photo shows with no
-     top/bottom crop. Update the 2384/4240 ratio if you swap in a
-     differently-shaped hero photo (height/width of the actual image, in px). */
-  min-height: max(560px, 100vh, calc(100vw * 2384 / 4240));
+  min-height: 560px;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
+}
+/* Only the home page hero uses this — it grows taller than the section's own
+   height (100vh, or the 78vh set inline on album pages) on very wide/short
+   screens, so the full photo shows without top/bottom cropping. This is
+   tuned to the home photo's specific 4240×2384 shape; if you swap in a
+   differently-shaped photo there, update that ratio to match. Don't add this
+   class to the LUX/Within hero — their shorter 78vh height is intentional. */
+.hero.hero-fit-photo {
+  min-height: max(560px, 100vh, calc(100vw * 2384 / 4240));
 }
 .hero-media {
   position: absolute;
@@ -213,6 +248,13 @@ body.theme-within .site-header.is-scrolled { background: rgba(228, 226, 221, 0.8
      to do about it. */
   object-position: 50% 0%;
   will-change: transform;
+}
+/* Within hero photo: nudges which part of the photo is framed so the nav
+   and hero title/tagline land over a clearer area of the image. Increase
+   this value to shift the visible image content upward (crops more off
+   the top); decrease it to shift back down. Adjust and reload to taste. */
+body.theme-within .hero-media img {
+  object-position: 50% 15%;
 }
 .hero-scrim {
   position: absolute;
@@ -490,12 +532,80 @@ body.theme-within .album-cover { box-shadow: 0 30px 60px -25px rgba(0,0,0,0.18);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
+.player-error {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #c0453a;
+}
+body.theme-lux .player-error { color: #d98a6a; }
 
 @media (max-width: 560px) {
   .track { grid-template-columns: 28px 32px 1fr; }
   .track-duration { display: none; }
   .player-bar { grid-template-columns: 40px 1fr; }
   .player-time { display: none; }
+}
+
+/* ----- Photo break (standalone photo between sections) ----- */
+.photo-break { padding: 70px 0 90px; }
+.photo-break .wrap { max-width: 640px; }
+.photo-break-frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.photo-break-img {
+  position: absolute;
+  top: -12%;
+  bottom: -12%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 124%;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+
+/* ----- Credits section ----- */
+.credits-section { padding: 20px 0 110px; }
+.credits-section .wrap { max-width: 760px; }
+.credits-section h2 { margin-bottom: 8px; }
+.credits-group { margin-top: 40px; }
+.credits-group-title {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.musician-list {
+  border-top: 1px solid var(--line);
+}
+.musician-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 6px 20px;
+  align-items: baseline;
+}
+.musician-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.musician-roles {
+  color: var(--text-dim);
+  font-size: 0.92rem;
+}
+.track-note {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+@media (max-width: 560px) {
+  .musician-list li { grid-template-columns: 1fr; gap: 2px; }
 }
 
 /* ----- Album credits ----- */
@@ -532,6 +642,44 @@ body.theme-within .album-cover { box-shadow: 0 30px 60px -25px rgba(0,0,0,0.18);
 .bio-block .wrap { max-width: 680px; }
 .bio-block p { color: var(--text-dim); font-size: 1.05rem; }
 .bio-block p + p { margin-top: 18px; }
+
+/* ----- Gallery page ----- */
+.gallery-hero { padding: 150px 0 20px; }
+.gallery-hero h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+.gallery-hero p { color: var(--text-dim); margin-top: 14px; max-width: 50ch; }
+
+.gallery-grid-section { padding: 40px 0 110px; }
+.gallery-grid {
+  column-count: 2;
+  column-gap: 24px;
+}
+
+@media (min-width: 1400px) {
+  .gallery-grid { column-count: 3; }
+}
+
+@media (max-width: 640px) {
+  .gallery-grid { column-count: 1; }
+}
+
+.gallery-item {
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  margin: 0 0 24px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+}
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .gallery-grid { column-count: 1; }
+}
 
 /* ----- Videos page ----- */
 .videos-hero { padding: 150px 0 20px; }

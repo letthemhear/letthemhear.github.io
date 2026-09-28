@@ -95,7 +95,7 @@
   var playerBar = document.getElementById('playerBar');
 
   if (trackList && audioEl && playerBar) {
-    var CROSSFADE_SECONDS = 0.2;
+    var CROSSFADE_SECONDS = 0.5;
 
     var playerToggle = document.getElementById('playerToggle');
     var playerTrackTitle = document.getElementById('playerTrackTitle');
@@ -135,6 +135,23 @@
     var trackFor = function (src) {
       return tracks.filter(function (t) { return t.getAttribute('data-src') === src; })[0] || null;
     };
+
+    // Auto-fill each track's duration (the "--:--" placeholder) by quietly
+    // reading its file's metadata — this only pulls the file's header info,
+    // not the whole song, so it's cheap even for all 10 tracks at once. If a
+    // file is missing/misnamed, that track's placeholder just stays as-is.
+    tracks.forEach(function (trackEl) {
+      var probe = new Audio();
+      probe.preload = 'metadata';
+      probe.addEventListener('loadedmetadata', function () {
+        if (!isFinite(probe.duration)) return;
+        var span = trackEl.querySelector('.track-duration');
+        var text = formatTime(probe.duration);
+        if (span) span.textContent = text;
+        trackEl.setAttribute('data-duration', text);
+      });
+      probe.src = trackEl.getAttribute('data-src');
+    });
 
     var setActiveTrack = function (trackEl) {
       tracks.forEach(function (t) { t.classList.remove('is-active', 'is-playing'); });
@@ -206,7 +223,6 @@
       standby.currentTime = 0;
       standby.volume = 0;
       setActiveTrack(nextTrackEl);
-      preloadNextAfter(nextTrackEl);
       standby.play().catch(function (err) {
         console.error('Could not start crossfade for "' + nextSrc + '":', err);
         crossfading = false;
@@ -240,6 +256,10 @@
       var old = active;
       active = standby;
       standby = old;
+      // `standby` is now the just-freed old element — safe to load the
+      // upcoming track into it, since it's no longer playing anything.
+      standby.removeAttribute('data-pending-src');
+      preloadNextAfter(currentTrack);
     };
 
     var playPause = function () {
