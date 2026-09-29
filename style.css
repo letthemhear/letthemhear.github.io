@@ -400,6 +400,17 @@ body.theme-within .hero-scrim {
   object-position: 50% 30%;
 }
 
+/* LUX page's split photo (lux2.jpg) shouldn't be cropped to the shared 4:5
+   box above — this lets it size to its own natural aspect ratio instead,
+   shrinking to fit the column without losing any of the image. Scoped to
+   theme-lux only so the home page bio photo (which uses the same
+   .split-media class) keeps its original cropped framing. */
+body.theme-lux .split-media img {
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
 @media (max-width: 820px) {
   .split { grid-template-columns: 1fr; gap: 34px; padding: 60px 0; }
   .split.split-reverse { direction: ltr; }
@@ -547,9 +558,7 @@ body.theme-lux .player-error { color: #d98a6a; }
   .player-time { display: none; }
 }
 
-/* ----- Photo break (standalone photo between sections) ----- */
-.photo-break { padding: 70px 0 90px; }
-.photo-break .wrap { max-width: 640px; }
+/* ----- Framed parallax photo (used beside the Within production credits) ----- */
 .photo-break-frame {
   position: relative;
   aspect-ratio: 4 / 5;
@@ -569,9 +578,33 @@ body.theme-lux .player-error { color: #d98a6a; }
 }
 
 /* ----- Credits section ----- */
-.credits-section { padding: 20px 0 110px; }
+.credits-section { padding: 70px 0 110px; }
 .credits-section .wrap { max-width: 760px; }
 .credits-section h2 { margin-bottom: 8px; }
+
+/* Top credits row: Production list beside the photo. This is wider than the
+   760px column used by the lists below, so it overrides that max-width. */
+.credits-section .wrap.credits-top {
+  max-width: var(--maxw);
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 70px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 820px) {
+  .credits-section .wrap.credits-top {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .credits-top .photo-break-frame {
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
 .credits-group { margin-top: 40px; }
 .credits-group-title {
   font-family: var(--serif);
@@ -649,6 +682,14 @@ body.theme-lux .player-error { color: #d98a6a; }
 .gallery-hero p { color: var(--text-dim); margin-top: 14px; max-width: 50ch; }
 
 .gallery-grid-section { padding: 40px 0 110px; }
+.gallery-section-title {
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  font-weight: 500;
+  margin: 50px 0 24px;
+}
+.gallery-section-title:first-of-type {
+  margin-top: 0;
+}
 .gallery-grid {
   column-count: 2;
   column-gap: 24px;
@@ -675,10 +716,6 @@ body.theme-lux .player-error { color: #d98a6a; }
   width: 100%;
   height: auto;
   display: block;
-}
-
-@media (max-width: 640px) {
-  .gallery-grid { column-count: 1; }
 }
 
 /* ----- Videos page ----- */

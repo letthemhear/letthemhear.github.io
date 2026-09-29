@@ -34,15 +34,14 @@
 
 <section class="contact-block">
     <!--
-      This is a static site (GitHub Pages has no backend), so this form can't send
-      email on its own. Two easy options:
-      1) Leave it as a mailto form (already wired below) — it opens the visitor's
-         email client with the message pre-filled.
-      2) Use a free form service like Formspree (formspree.io) — replace the
-         form's action/method with the snippet they give you, no code changes needed
-         beyond that.
+      This form submits to Formspree (a free form backend), so it delivers
+      straight to your inbox — no email client needed on the visitor's end.
+      Formspree sends you a one-time confirmation email the first time it
+      gets a real submission; click the link in that email or messages won't
+      arrive. The hidden _subject field just sets the email's subject line.
     -->
-    <form class="contact-form" action="mailto:REPLACE_WITH_YOUR_EMAIL@example.com" method="post" enctype="text/plain">
+    <form class="contact-form" action="https://formspree.io/f/mkjgkbyd" method="POST">
+      <input type="hidden" name="_subject" value="New message from your website contact form">
       <div class="field">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" required>
