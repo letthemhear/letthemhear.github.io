@@ -34,13 +34,16 @@
 
 <section class="contact-block">
     <!--
-      This form submits to Formspree (a free form backend), so it delivers
-      straight to your inbox — no email client needed on the visitor's end.
-      Formspree sends you a one-time confirmation email the first time it
-      gets a real submission; click the link in that email or messages won't
-      arrive. The hidden _subject field just sets the email's subject line.
+      This form submits to Formspree (a free form backend) via JavaScript
+      (see script.js), so the visitor never leaves this page — no redirect to
+      formspree.io. Formspree sends you a one-time confirmation email the
+      first time it gets a real submission; click the link in that email or
+      messages won't arrive. The hidden _subject field just sets the email's
+      subject line. If JavaScript is unavailable for some reason, the form
+      still works as a plain submit — it would just redirect to Formspree's
+      own confirmation page in that fallback case.
     -->
-    <form class="contact-form" action="https://formspree.io/f/mkjgkbyd" method="POST">
+    <form class="contact-form" id="contactForm" action="https://formspree.io/f/mkjgkbyd" method="POST">
       <input type="hidden" name="_subject" value="New message from your website contact form">
       <div class="field">
         <label for="name">Name</label>
@@ -55,12 +58,13 @@
         <textarea id="message" name="message" required></textarea>
       </div>
       <button type="submit" class="btn btn-solid">Send message</button>
+      <p class="form-status form-status-success" id="formSuccess" hidden>Thanks for reaching out — I'll get back to you soon.</p>
+      <p class="form-status form-status-error" id="formError" hidden>Something went wrong sending that — try again, or email me directly below.</p>
     </form>
 
     <div class="contact-direct">
       <h2>Direct</h2>
-      <p><!-- TODO: replace with your real contact email --> hello@REPLACE-ME.com</p>
-      <p><!-- OPTIONAL: booking/press-specific contact --> Booking &amp; press: booking@REPLACE-ME.com</p>
+      <p><!-- TODO: replace with your real contact email --> jonah.n.cullen@gmail.com</p>
       <div class="contact-social">
         <a class="social-link" href="https://www.instagram.com/jonah_cullen?stkn=MzIwM2lxb25rYWd0&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
           <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.25.07 1.62.07 4.81s-.01 3.56-.07 4.81c-.15 3.23-1.66 4.77-4.92 4.92-1.25.06-1.62.07-4.85.07s-3.6-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.25-.07-1.62-.07-4.81s.02-3.56.07-4.81c.15-3.23 1.66-4.77 4.92-4.92C8.4 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52.01-4.76.07-2.34.11-3.44 1.22-3.55 3.55-.06 1.24-.07 1.6-.07 4.75s.01 3.51.07 4.75c.11 2.32 1.2 3.44 3.55 3.55 1.24.06 1.6.07 4.76.07s3.52-.01 4.76-.07c2.34-.11 3.44-1.22 3.55-3.55.06-1.24.07-1.6.07-4.75s-.01-3.51-.07-4.75c-.11-2.32-1.2-3.44-3.55-3.55C15.52 4.01 15.15 4 12 4zm0 3.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2zm0 1.8a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zm4.8-2.9a1.08 1.08 0 1 1 0 2.15 1.08 1.08 0 0 1 0-2.15z"/></svg>
