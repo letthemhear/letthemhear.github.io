@@ -357,4 +357,47 @@
       active.currentTime = pct * active.duration;
     });
   }
+
+  /* ---------- Contact form (Formspree, without leaving the page) ----------
+     A plain HTML form pointed at Formspree works on its own, but redirects
+     the visitor to a page on formspree.io afterward. Submitting via fetch
+     instead keeps them on this page, and we show our own success/error
+     message rather than Formspree's. If fetch or JS fails for any reason,
+     the <form>'s normal action/method still work as a fallback (it would
+     just redirect to Formspree's own confirmation page in that case). */
+  var contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    var formSuccess = document.getElementById('formSuccess');
+    var formError = document.getElementById('formError');
+
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (formSuccess) formSuccess.hidden = true;
+      if (formError) formError.hidden = true;
+
+      var submitBtn = contactForm.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      fetch(contactForm.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(contactForm)
+      })
+        .then(function (response) {
+          if (response.ok) {
+            contactForm.reset();
+            if (formSuccess) formSuccess.hidden = false;
+          } else {
+            if (formError) formError.hidden = false;
+          }
+        })
+        .catch(function (err) {
+          console.error('Contact form submission failed:', err);
+          if (formError) formError.hidden = false;
+        })
+        .finally(function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
+    });
+  }
 })();
