@@ -93,6 +93,19 @@ body.theme-within .site-header:not(.is-scrolled) .nav-toggle span::after {
   background: #f2f0e8;
 }
 
+/* On mobile, the tagline sits over a lighter part of the Within hero photo
+   (the crop shifts at narrow/tall aspect ratios), so the light text above
+   becomes unreadable there even though it works on desktop. Flip just the
+   tagline to the theme's normal dark text at this size, with a light halo
+   instead of a dark one for contrast against any darker patches. The title
+   isn't included here since it reportedly stays readable on mobile as-is. */
+@media (max-width: 780px) {
+  body.theme-within .hero-content .hero-tagline {
+    color: #2a2a27;
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.55);
+  }
+}
+
 body {
   background: var(--bg);
   color: var(--text);
@@ -377,7 +390,9 @@ body.theme-within .hero-scrim {
 
 /* ----- Two-column intro / bio sections ----- */
 .split {
-  padding: 90px 0;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 90px 32px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 70px;
@@ -412,7 +427,7 @@ body.theme-lux .split-media img {
 }
 
 @media (max-width: 820px) {
-  .split { grid-template-columns: 1fr; gap: 34px; padding: 60px 0; }
+  .split { grid-template-columns: 1fr; gap: 34px; padding: 60px 32px; }
   .split.split-reverse { direction: ltr; }
 }
 
